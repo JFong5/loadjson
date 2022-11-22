@@ -2,7 +2,6 @@ import pymongo
 from pymongo import MongoClient
 import json
 
-
 def inputJsonName():
     '''
     Prompts the user for a Json File name
@@ -11,7 +10,6 @@ def inputJsonName():
     jsonName = input("Input the json file name you would like to insert. \n")
     return jsonName
 
-
 def inputPortNum():
     '''
     Prompts the user for a Port Num
@@ -19,7 +17,6 @@ def inputPortNum():
     '''
     portNum = int(input("Please input a port number. \n"))
     return portNum
-
 
 def main():
     # Prompt user for portNum and insert it to client name
@@ -35,18 +32,20 @@ def main():
         db.data.drop()
         print("Updating data base....")
 
-    # Checks
+    #Checks
     db = client["291db"]
     collection = db["dplb"]
 
+    collection_list = []
     fileName = inputJsonName()
-    with open(fileName) as file:
-        data = json.loads(file)
-
+    with open("fileName") as file:
+        for item in file:
+            dic = json.loads(item)
+            collection_list.append(dic)
+    
     collection.delete_many({})
-    collection.insert_many(data)
+    collection.insert_many(collection_list)
 
     print("Collection Created!")
-
 
 main()
